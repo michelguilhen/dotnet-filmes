@@ -8,16 +8,12 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 
-export class FilmService {
-  private readonly _rootUrl: string = GlobalConstants.baseApiUrl + '/films';
+export class GenreService {
+  private readonly _rootUrl: string = GlobalConstants.baseApiUrl + '/genres';
 
   constructor(private http: HttpClient) { }
 
-  public getFilms(): Observable<JsonResponse> {
+  public getGenres(): Observable<JsonResponse> {
     return this.http.get<JsonResponse>(this._rootUrl);
-  }
-
-  public getFilmById(id: number): Observable<JsonResponse> {
-    return this.http.get<JsonResponse>(this._rootUrl + '/' + id);
   }
 }

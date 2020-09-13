@@ -5,14 +5,13 @@ import { Film } from '../shared/models/film.model';
 import { Genre } from '../shared/models/genre.model';
 
 @Component({
-  selector: 'app-create-film',
-  templateUrl: './create-film.component.html',
-  styleUrls: ['./create-film.component.css']
+  selector: 'app-film',
+  templateUrl: './film.component.html',
+  styleUrls: ['./film.component.css']
 })
-export class CreateFilmComponent implements OnInit {
+export class FilmComponent implements OnInit {
   public genres: Genre[];
-  public film: Film;
-  public selectedGenreId: number;
+  public movie: Film;
 
   constructor(private filmService: FilmService, private genreService: GenreService) { }
 
@@ -27,15 +26,20 @@ export class CreateFilmComponent implements OnInit {
     }, err => {
       console.log(`Erro: ${err}`);
     });
+
+    this.filmService.getFilmById(1).subscribe(res => {
+      if (res.success) {
+        this.movie = res.data as Film;
+      }
+      else {
+        console.log(`Erro: ${res.message}`);
+      }
+    }, err => {
+        console.log(`Erro: ${err}`);
+    })
   }
 
   public createFilm(film: Film) {
 
-  }
-
-  public submit() {
-    //this.film.genre = this.genres.find(f => f.id == this.selectedGenreId);
-    const gender = this.genres.find(f => f.id == this.selectedGenreId);
-    console.log(gender);
   }
 }

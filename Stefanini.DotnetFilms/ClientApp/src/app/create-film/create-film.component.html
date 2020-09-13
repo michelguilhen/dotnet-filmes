@@ -1,1 +1,56 @@
-<p>create-film works!</p>
+<div class="container">
+  <h2 class="color-stefanini">Cadastrar Novo Filme</h2>
+  <form>
+    <div class="row mt-3">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="title">Título</label>
+          <input type="text" class="form-control mt-1" id="title" required>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="director">Diretor</label>
+          <input type="text" class="form-control mt-1" id="director" required>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-3">
+        <div class="form-group">
+          <label for="genre">Gênero</label>
+          <select class="form-control mt-1" id="genre" [(ngModel)]="selectedGenreId" [ngModelOptions]="{standalone: true}">
+            <option disabled>Selecione um gênero:</option>
+            <option *ngFor="let genre of genres" [value]="genre.id">{{genre.description}}</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-2">
+        <div class="form-group">
+          <label for="release">Ano de Lançamento</label>
+          <input type="text" class="form-control mt-1" id="release" required>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="synopsis">Sinopse</label>
+          <textarea type="text" class="form-control mt-1" id="synopsis" rows="6" required></textarea>
+        </div>
+      </div>
+    </div>
+    <div class="row mb-5">
+      <div class="col-md-12">
+        <div class="d-flex">
+          <button type="button" class="btn btn-success">Salvar</button>
+          <button type="button" class="btn btn-danger ml-2">Cancelar</button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

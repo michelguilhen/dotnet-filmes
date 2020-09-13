@@ -40,6 +40,7 @@
     <None Remove="ClientApp\src\app\shared\models\genre.model.ts" />
     <None Remove="ClientApp\src\app\shared\models\json\jsonResponse.ts" />
     <None Remove="ClientApp\src\app\shared\services\film.service.ts" />
+    <None Remove="ClientApp\src\app\shared\services\genre.service.ts" />
   </ItemGroup>
 
   <ItemGroup>
@@ -49,6 +50,9 @@
     </TypeScriptCompile>
     <TypeScriptCompile Include="ClientApp\src\app\shared\models\genre.model.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\shared\models\json\jsonResponse.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\shared\services\genre.service.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="ClientApp\src\app\shared\services\film.service.ts" />
   </ItemGroup>
 
@@ -58,6 +62,9 @@
     </None>
     <None Update="ClientApp\src\app\shared\models\film.model.js.map">
       <DependentUpon>film.model.js</DependentUpon>
+    </None>
+    <None Update="ClientApp\src\app\shared\services\genre.service.js">
+      <DependentUpon>genre.service.ts</DependentUpon>
     </None>
   </ItemGroup>
 

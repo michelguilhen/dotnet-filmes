@@ -20,7 +20,7 @@ namespace Stefanini.DotnetFilms.Controllers
         [HttpGet]
         public async Task<IActionResult> GetGenres()
         {
-            var genres = await _context.Genres.ToListAsync();
+          var genres = await _context.Genres.ToListAsync();
 
             return Ok(new JsonResponse { Success = true, Message = "List retrieved with success", Data = genres });
         }
