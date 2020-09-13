@@ -23,9 +23,32 @@ namespace Stefanini.DotnetFilms.Controllers
         [HttpGet]
         public async Task<IActionResult> GetFilms()
         {
-            var films = await _context.Films.ToListAsync();
+            var films = await _context.Films
+                .Include(f => f.Genre)
+                .ToListAsync();
+
+            if (films.Count == 0)
+            {
+                return NotFound(new JsonResponse { Success = false, Message = "Could not find any film", Data = null });
+            }
 
             return Ok(new JsonResponse { Success = true, Message = "List retrieved with success", Data = films });
+        }
+        
+        [HttpGet]
+        [Route("{id}")]
+        public async Task<IActionResult> GetFilmById(int id)
+        {
+            var film = await _context.Films
+                .Include(f => f.Genre)
+                .FirstOrDefaultAsync(f => f.Id == id);
+
+            if (film == null)
+            {
+                return NotFound(new JsonResponse { Success = false, Message = "Could not find any film with informed id", Data = null });
+            }
+
+            return Ok(new JsonResponse { Success = true, Message = "Found film with success", Data = film });
         }
 
         [HttpGet]

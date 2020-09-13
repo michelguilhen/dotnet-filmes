@@ -1,0 +1,66 @@
+<div class="container-lg">
+  <div class="table-responsive">
+    <div class="table-wrapper">
+      <div class="table-title">
+        <div class="row">
+          <div class="col-sm-6">
+            <h2>Filmes</h2>
+          </div>
+          <div class="col-sm-6">
+            <div class="search-box">
+              <div class="input-group">
+                <input type="text" id="search" class="form-control" placeholder="Buscar filme...">
+                <span class="input-group-addon"><i class="fas fa-search"></i></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th class="wd-33 font-weight-bold"><strong>Título</strong></th>
+            <th class="w-25 font-weight-bold">Diretor</th>
+            <th class="w-20 font-weight-bold">Gênero</th>
+            <th class="w-5 font-weight-bold">Ano</th>
+            <th class="w-10 font-weight-bold">Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="link" *ngFor="let film of films; let i = index">
+            <td>{{i + 1}}</td>
+            <td>{{film.title}}</td>
+            <td>{{film.director}}</td>
+            <td>{{film.genre.description}}</td>
+            <td>{{film.release}}</td>
+            <td class="d-flex justify-content-start">
+              <a href="#" class="edit" title="Editar" data-toggle="tooltip" data-toggle="modal" data-target="#exampleModal"><i class="fas fa-edit"></i></a>
+              <a href="#" class="delete" title="Deletar" data-toggle="tooltip"><i class="fas fa-trash-alt"></i></a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<!-- modal de confirmação de exclusão-->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Excluir</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Tem certeza que deseja excluir o filme?.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary">Excluir</button>
+      </div>
+    </div>
+  </div>
+</div>
