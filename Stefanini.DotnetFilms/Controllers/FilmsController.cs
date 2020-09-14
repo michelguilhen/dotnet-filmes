@@ -62,7 +62,7 @@ namespace Stefanini.DotnetFilms.Controllers
 
             if (films.Count == 0)
             {
-                return NotFound(new JsonResponse { Success = false, Message = "Could not find any film with these params", Data = null });
+                return Ok(new JsonResponse { Success = false, Message = "Could not find any film with these params", Data = null });
             }
 
             return Ok(new JsonResponse { Success = true, Message = "List retrieved with success", Data = films });
@@ -88,30 +88,20 @@ namespace Stefanini.DotnetFilms.Controllers
         }
 
         [HttpPut]
-        [Route("{id}")]
-        public async Task<IActionResult> UpdateFilm(int id, Film film)
+        public async Task<IActionResult> UpdateFilm(Film film)
         {
             var existingFilm = await _context.Films
                 .Include(f => f.Genre)
-                .FirstOrDefaultAsync(f => f.Id == id);
+                .FirstOrDefaultAsync(f => f.Id == film.Id);
 
             if (existingFilm == null)
             {
                 return NotFound(new JsonResponse { Success = false, Message = "Impossible to update, film was not found", Data = null });
             }
 
-            existingFilm.Title = film.Title;
-            existingFilm.Synopsis = film.Synopsis;
-            existingFilm.Release = film.Release;
-            existingFilm.Director = film.Director;
+            _context.Entry(existingFilm).CurrentValues.SetValues(film);
 
-            if (existingFilm.Genre.Id != film.Genre.Id)
-            {
-                existingFilm.Genre.Id = film.Genre.Id;
-                existingFilm.Genre.Description = film.Genre.Description;
-            }
-
-            _context.Films.Update(existingFilm);
+            existingFilm.Genre = film.Genre;
 
             try
             {
@@ -122,7 +112,7 @@ namespace Stefanini.DotnetFilms.Controllers
                 return BadRequest(new JsonResponse { Success = false, Message = e.Message, Data = null });
             }
 
-            return Ok(new JsonResponse { Success = true, Message = "Film updated with success", Data = film });
+            return Ok(new JsonResponse { Success = true, Message = "Film updated with success", Data = existingFilm });
         }
 
         [HttpDelete]

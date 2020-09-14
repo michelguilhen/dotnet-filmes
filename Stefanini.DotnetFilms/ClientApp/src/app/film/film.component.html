@@ -1,14 +1,89 @@
 <div class="container">
-  <h2 class="color-stefanini">Detalhes</h2>
-  <h2 class="color-stefanini">Editar Filme</h2>
-  <form>
-    <div class="row mt-3">
-      <div class="col-md-5">
-        <div class="form-group">
-          <label for="movie">Título</label>
-          <input class="form-control" name="movie" [(ngModel)]="movie.title" id="movie" required [readonly]="false" />
-        </div>
-      </div>
+  <div class="row mt-5">
+    <div class="offset-md-1 col-md-10">
+      <h2 class="color-stefanini" *ngIf="!editMode">Detalhes</h2>
+      <h2 class="color-stefanini" *ngIf="editMode">Editar Filme</h2>
     </div>
-  </form>
+  </div>
+  <div class="container-fluid" *ngIf="loading">
+    <app-loading-spinner></app-loading-spinner>
+  </div>
+  <div class="row" *ngIf="!loading">
+    <div class="offset-md-1 col-md-10">
+      <form #form="ngForm" (ngSubmit)="editFilm(form)">
+        <div class="row d-none">
+          <div class="col-md-7">
+            <div class="form-group">
+              <label for="id">Id</label>
+              <input type="text" class="form-control mt-1" id="id" name="id" #id="ngModel" [(ngModel)]="film.id" required [readonly]="!editMode">
+            </div>
+          </div>
+        </div>
+        <div class="row mt-3">
+          <div class="col-md-7">
+            <div class="form-group">
+              <label for="title">Título</label>
+              <input type="text" class="form-control mt-1" id="title" name="title" #title="ngModel" [(ngModel)]="film.title" required [readonly]="!editMode">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-7">
+            <div class="form-group">
+              <label for="director">Diretor</label>
+              <input type="text" class="form-control mt-1" id="director" name="director" #director="ngModel" [(ngModel)]="film.director" required [readonly]="!editMode">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-5">
+            <div class="form-group">
+              <label for="genre">Gênero</label>
+              <select class="form-control mt-1" id="genre" name="genre" #genre="ngModel" [(ngModel)]="selectedGenreId" (change)="disparar($event)" required [disabled]="!editMode">
+                <ng-container *ngIf="editMode">
+                  <option disabled>Selecione um gênero:</option>
+                  <option *ngFor="let genre of genres" [selected]="genre.description === currentGenre" [value]="genre.id">{{genre.description}}</option>
+                </ng-container>
+                <ng-container *ngIf="!editMode">
+                  <option *ngFor="let genre of genres" [selected]="genre.description === currentGenre">{{genre.description}}</option>
+                </ng-container>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-3">
+            <div class="form-group">
+              <label for="release">Ano de Lançamento</label>
+              <input type="text" class="form-control mt-1" id="release" name="release" #release [(ngModel)]="film.release" required [readonly]="!editMode">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-10">
+            <div class="form-group">
+              <label for="synopsis">Sinopse</label>
+              <textarea type="text" class="form-control mt-1" id="synopsis" name="synopsis" #synopsis rows="6" [(ngModel)]="film.synopsis" required [readonly]="!editMode"></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="row mb-5" *ngIf="editMode">
+          <div class="col-md-12">
+            <div class="d-flex">
+              <button type="submit" class="btn btn-success">Salvar</button>
+              <button type="button" class="btn btn-danger ml-2">Cancelar</button>
+            </div>
+          </div>
+        </div>
+        <div class="row mb-5" *ngIf="!editMode">
+          <div class="col-md-12">
+            <div class="d-flex">
+              <button routerLink="/" type="button" class="btn btn-danger ml-2">Voltar</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
 </div>
+<!--<app-confirmation-modal *ngIf="abrirModal" [message]="'Filme alterado com sucesso!'" (close)="onCloseModal($event)"></app-confirmation-modal>-->

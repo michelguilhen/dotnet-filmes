@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Stefanini.DotnetFilms.Data;
 
 namespace Stefanini.DotnetFilms.Migrations
 {
     [DbContext(typeof(FilmsDbContext))]
-    partial class FilmsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200914003339_AlterTableFilmRequiredFields")]
+    partial class AlterTableFilmRequiredFields
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

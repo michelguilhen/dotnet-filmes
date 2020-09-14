@@ -1,0 +1,11 @@
+<div class="backdrop" (click)="onClose()"></div>
+<div class="alert-box rounded">
+  <button type="button" class="close" aria-label="Close" (click)="onClose()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+  <p class="mensagem">{{ message }}</p>
+  <hr>
+  <div class="alert-box-actions">
+    <button class="btn btn-secondary w-30 mr-2" (click)="onClose()">Ok</button>
+  </div>
+</div>

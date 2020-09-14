@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Stefanini.DotnetFilms.Data;
 
 namespace Stefanini.DotnetFilms.Migrations
 {
     [DbContext(typeof(FilmsDbContext))]
-    partial class FilmsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200914002944_AlterTableReleaseNullable")]
+    partial class AlterTableReleaseNullable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -27,10 +29,9 @@ namespace Stefanini.DotnetFilms.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Director")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long>("GenreId")
+                    b.Property<long?>("GenreId")
                         .HasColumnType("bigint");
 
                     b.Property<int?>("Release")
@@ -40,7 +41,6 @@ namespace Stefanini.DotnetFilms.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Title")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -69,9 +69,7 @@ namespace Stefanini.DotnetFilms.Migrations
                 {
                     b.HasOne("Stefanini.DotnetFilms.Models.Genre", "Genre")
                         .WithMany()
-                        .HasForeignKey("GenreId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("GenreId");
                 });
 #pragma warning restore 612, 618
         }

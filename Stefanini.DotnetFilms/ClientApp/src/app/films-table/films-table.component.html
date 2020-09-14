@@ -3,16 +3,26 @@
     <div class="table-wrapper">
       <div class="table-title">
         <div class="row">
-          <div class="col-sm-6">
+          <div class="col-md-4">
             <h2>Filmes</h2>
           </div>
-          <div class="col-sm-6">
-            <div class="search-box">
+          <div class="col-md-4">
+            <!--<div class="search-box">
               <div class="input-group">
                 <input type="text" id="search" class="form-control" placeholder="Buscar filme...">
                 <span class="input-group-addon"><i class="fas fa-search"></i></span>
               </div>
-            </div>
+            </div>-->
+            <input type="text" id="search" class="form-control" [(ngModel)]="filmSearch" placeholder="Buscar filme...">
+          </div>
+          <div class="col-md-3">
+            <select type="text" id="search" class="form-control" [(ngModel)]="genreSearch">
+              <option>Todos</option>
+              <option *ngFor="let genre of genres">{{genre.description}}</option>
+            </select>
+          </div>
+          <div class="col-md-1">
+            <button (click)="searchFilms()" class="btn btn-success">Ok</button>
           </div>
         </div>
       </div>
@@ -27,16 +37,23 @@
             <th class="w-10 font-weight-bold">Ações</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody *ngIf="loading" class="text-center">
+          <tr>
+            <td colspan="6" class="text-center">
+              <app-loading-spinner></app-loading-spinner>
+            </td>
+          </tr>
+        </tbody>
+        <tbody *ngIf="!loading">
           <tr class="link" *ngFor="let film of films; let i = index">
-            <td>{{i + 1}}</td>
-            <td>{{film.title}}</td>
+            <td (click)="loadFilm(film.id)">{{i + 1}}</td>
+            <td (click)="loadFilm(film.id)">{{film.title}}</td>
             <td>{{film.director}}</td>
             <td>{{film.genre.description}}</td>
             <td>{{film.release}}</td>
             <td class="d-flex justify-content-start">
-              <a href="#" class="edit" title="Editar" data-toggle="tooltip" data-toggle="modal" data-target="#exampleModal"><i class="fas fa-edit"></i></a>
-              <a href="#" class="delete" title="Deletar" data-toggle="tooltip"><i class="fas fa-trash-alt"></i></a>
+              <a (click)="editFilm(film.id)" href="#" class="edit" title="Editar" data-toggle="tooltip" data-toggle="modal" data-target="#exampleModal"><i class="fas fa-edit"></i></a>
+              <a (click)="deleteId = film.id; abrirModal = true" href="#" class="delete" title="Deletar" data-toggle="tooltip"><i class="fas fa-trash-alt"></i></a>
             </td>
           </tr>
         </tbody>
@@ -64,3 +81,4 @@
     </div>
   </div>
 </div>
+<app-modal *ngIf="abrirModal" [message]="'Deseja excluir este filme?'" (close)="onCloseModal($event)"></app-modal>

@@ -1,0 +1,24 @@
+<div class="backdrop" (click)="onClose()"></div>
+<div class="alert-box rounded">
+  <div class="row">
+    <div class="col-md-12">
+      <button type="button" class="close" aria-label="Close" (click)="onClose()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+  </div>
+  <div class="row mt-3">
+    <div class="col-md-12">
+      <p class="mensagem">{{ message }}</p>
+    </div>
+  </div>
+  <hr>
+  <div class="row mt-3">
+    <div class="col-md-12">
+      <div class="alert-box-actions">
+        <button class="btn btn-primary w-30 mr-2" (click)="onConfirm()">Sim</button>
+        <button class="btn btn-secondary w-30 ml-2" (click)="onClose()">Não</button>
+      </div>
+    </div>
+  </div>
+</div>
