@@ -34,7 +34,7 @@ namespace Stefanini.DotnetFilms.Controllers
 
             return Ok(new JsonResponse { Success = true, Message = "List retrieved with success", Data = films });
         }
-        
+
         [HttpGet]
         [Route("{id}")]
         public async Task<IActionResult> GetFilmById(int id)
@@ -99,9 +99,15 @@ namespace Stefanini.DotnetFilms.Controllers
                 return NotFound(new JsonResponse { Success = false, Message = "Impossible to update, film was not found", Data = null });
             }
 
-            _context.Entry(existingFilm).CurrentValues.SetValues(film);
-
-            existingFilm.Genre = film.Genre;
+            if (existingFilm.Genre.Id == film.Genre.Id)
+            {
+                _context.Entry(existingFilm).CurrentValues.SetValues(film);
+            }
+            else
+            {
+                _context.Entry(existingFilm).CurrentValues.SetValues(film);
+                existingFilm.Genre = film.Genre;
+            }
 
             try
             {

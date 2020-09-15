@@ -5,8 +5,10 @@
       <h2 class="color-stefanini" *ngIf="editMode">Editar Filme</h2>
     </div>
   </div>
-  <div class="container-fluid" *ngIf="loading">
-    <app-loading-spinner></app-loading-spinner>
+  <div class="row mt-5" *ngIf="loading">
+    <div class="col-md-6 text-center">
+      <app-loading-spinner></app-loading-spinner>
+    </div>
   </div>
   <div class="row" *ngIf="!loading">
     <div class="offset-md-1 col-md-10">
@@ -39,7 +41,7 @@
           <div class="col-md-5">
             <div class="form-group">
               <label for="genre">Gênero</label>
-              <select class="form-control mt-1" id="genre" name="genre" #genre="ngModel" [(ngModel)]="selectedGenreId" (change)="disparar($event)" required [disabled]="!editMode">
+              <select class="form-control mt-1" id="genre" name="genre" #genre="ngModel" [(ngModel)]="selectedGenreId" required [disabled]="!editMode">
                 <ng-container *ngIf="editMode">
                   <option disabled>Selecione um gênero:</option>
                   <option *ngFor="let genre of genres" [selected]="genre.description === currentGenre" [value]="genre.id">{{genre.description}}</option>
@@ -71,14 +73,14 @@
           <div class="col-md-12">
             <div class="d-flex">
               <button type="submit" class="btn btn-success">Salvar</button>
-              <button type="button" class="btn btn-danger ml-2">Cancelar</button>
+              <button routerLink="/" type="button" class="btn btn-danger ml-2">Cancelar</button>
             </div>
           </div>
         </div>
         <div class="row mb-5" *ngIf="!editMode">
           <div class="col-md-12">
             <div class="d-flex">
-              <button routerLink="/" type="button" class="btn btn-danger ml-2">Voltar</button>
+              <button routerLink="/" type="button" class="btn btn-danger">Voltar</button>
             </div>
           </div>
         </div>
@@ -86,4 +88,4 @@
     </div>
   </div>
 </div>
-<!--<app-confirmation-modal *ngIf="abrirModal" [message]="'Filme alterado com sucesso!'" (close)="onCloseModal($event)"></app-confirmation-modal>-->
+<app-alert-modal *ngIf="abrirModal" [message]="message" (close)="onCloseModal()"></app-alert-modal>

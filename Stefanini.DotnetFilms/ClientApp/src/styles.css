@@ -153,6 +153,14 @@ h3 {
   color: #3250a0 !important;
 }
 
+.color-green {
+  color: #96be1e !important;
+}
+
+.bg-color-green {
+  background-color: #96be1e !important;
+}
+
 /* Link */
 .link {
   cursor: pointer;

@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { FilmComponent } from './film/film.component';
-import { CreateFilmComponent } from './create-film/create-film.component';
-import { FilmsTableComponent } from './films-table/films-table.component';
+import { FilmComponent } from './components/film/film.component';
+import { CreateFilmComponent } from './components/create-film/create-film.component';
+import { FilmsTableComponent } from './components/films-table/films-table.component';
 
 const routes: Routes = [
   {

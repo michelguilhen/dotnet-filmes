@@ -4,11 +4,16 @@
       <h2 class="color-stefanini">Cadastrar Novo Filme</h2>
     </div>
   </div>
-  <div class="row">
+  <div class="row mt-5" *ngIf="loading">
+    <div class="col-md-6 text-center">
+      <app-loading-spinner></app-loading-spinner>
+    </div>
+  </div>
+  <div class="row" *ngIf="!loading">
     <div class="offset-md-1 col-md-10">
       <form #form="ngForm" (ngSubmit)="createFilm(form)">
         <div class="row mt-3">
-          <div class="col-md-6">
+          <div class="col-md-7">
             <div class="form-group">
               <label for="title">Título</label>
               <input type="text" class="form-control mt-1" id="title" name="title" ngModel required>
@@ -16,7 +21,7 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-md-6">
+          <div class="col-md-7">
             <div class="form-group">
               <label for="director">Diretor</label>
               <input type="text" class="form-control mt-1" id="director" name="director" ngModel required>
@@ -24,7 +29,7 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-md-3">
+          <div class="col-md-5">
             <div class="form-group">
               <label for="genre">Gênero</label>
               <select class="form-control mt-1" id="genre" [(ngModel)]="selectedGenreId" [ngModelOptions]="{standalone: true}">
@@ -35,7 +40,7 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-md-2">
+          <div class="col-md-3">
             <div class="form-group">
               <label for="release">Ano de Lançamento</label>
               <input type="number" class="form-control mt-1" id="release" name="release" ngModel>
@@ -43,7 +48,7 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-md-6">
+          <div class="col-md-7">
             <div class="form-group">
               <label for="synopsis">Sinopse</label>
               <textarea type="text" class="form-control mt-1" id="synopsis" name="synopsis" ngModel rows="6"></textarea>
@@ -62,4 +67,4 @@
     </div>
   </div>
 </div>
-<!--<app-confirmation-modal *ngIf="abrirModal" [message]="'Filme alterado com sucesso!'" (close)="onCloseModal($event)"></app-confirmation-modal>-->
+<app-alert-modal *ngIf="abrirModal" [message]="modalMessage" (close)="closeModal()"></app-alert-modal>

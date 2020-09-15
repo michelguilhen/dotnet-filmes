@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { FilmService } from '../shared/services/film.service';
-import { Film } from '../shared/models/film.model';
-import { Genre } from '../shared/models/genre.model';
+import { FilmService } from '../../shared/services/film.service';
+import { Film } from '../../shared/models/film.model';
+import { Genre } from '../../shared/models/genre.model';
 import { Router } from '@angular/router';
-import { GenreService } from '../shared/services/genre.service';
+import { GenreService } from '../../shared/services/genre.service';
 
 @Component({
   selector: 'app-films-table',

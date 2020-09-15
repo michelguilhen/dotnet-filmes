@@ -11,13 +11,13 @@ import { GenreService } from './shared/services/genre.service';
 
 // Components
 import { AppComponent } from './app.component';
-import { NavbarComponent } from './navbar/navbar.component';
-import { FilmsTableComponent } from './films-table/films-table.component';
-import { CreateFilmComponent } from './create-film/create-film.component';
-import { FilmComponent } from './film/film.component';
-import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.component';
-import { ModalComponent } from './modal/modal.component';
-import { ConfirmationModalComponent } from './confirmation-modal/confirmation-modal.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
+import { FilmsTableComponent } from './components/films-table/films-table.component';
+import { CreateFilmComponent } from './components/create-film/create-film.component';
+import { FilmComponent } from './components/film/film.component';
+import { LoadingSpinnerComponent } from './components/loading-spinner/loading-spinner.component';
+import { ConfirmationModalComponent } from './shared/modals/modal/confirmation-modal.component';
+import { AlertModalComponent } from './shared/modals/confirmation-modal/alert-modal.component';
 
 @NgModule({
   declarations: [
@@ -27,8 +27,8 @@ import { ConfirmationModalComponent } from './confirmation-modal/confirmation-mo
     CreateFilmComponent,
     FilmComponent,
     LoadingSpinnerComponent,
-    ModalComponent,
     ConfirmationModalComponent,
+    AlertModalComponent,
   ],
   imports: [
     BrowserModule,

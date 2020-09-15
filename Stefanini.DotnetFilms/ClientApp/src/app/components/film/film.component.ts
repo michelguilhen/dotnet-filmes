@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FilmService } from '../shared/services/film.service';
-import { GenreService } from '../shared/services/genre.service';
-import { Film } from '../shared/models/film.model';
-import { Genre } from '../shared/models/genre.model';
+import { FilmService } from '../../shared/services/film.service';
+import { GenreService } from '../../shared/services/genre.service';
+import { Film } from '../../shared/models/film.model';
+import { Genre } from '../../shared/models/genre.model';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 
@@ -20,6 +20,7 @@ export class FilmComponent implements OnInit {
   public currentGenre: string;
   public selectedGenreId: number;
   public abrirModal: boolean;
+  public message: string;
 
   constructor(
     private filmService: FilmService,
@@ -76,25 +77,32 @@ export class FilmComponent implements OnInit {
   }
 
   public editFilm(form: NgForm) {
+    this.loading = true;
     const film: Film = form.value;
-    //this.film.genre = this.genres.find(f => f.id == this.selectedGenreId);
     film.genre = this.genres.find(f => f.id == this.selectedGenreId);
 
     if (form.value.release == '') {
       film.release = null;
     }
+    else {
+      film.release = +film.release;
+    }
 
     this.filmService.editFilm(film).subscribe(res => {
+      this.loading = false;
       if (res.success) {
-        this.router.navigate(['/']);
-        console.log(res.message)
-      }
-      else {
-        console.log(`Erro: ${res.message}`);
-      }
-      //this.abrirModal = true;
+        this.message = 'Filme alterado com sucesso!';
+        this.abrirModal = true;
+      } 
     }, err => {
-      console.log(`Erro: ${err}`);
+        this.message = 'Falha ao alterar filme!';
+        this.abrirModal = true;
+        this.loading = false;
     });
+  }
+
+  public onCloseModal() {
+    this.abrirModal = false;
+    this.router.navigate(['/']);
   }
 }
