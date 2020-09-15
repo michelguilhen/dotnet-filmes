@@ -6,7 +6,7 @@ namespace Stefanini.DotnetFilms.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.InsertData("Genres", "Description", new object[] { "Action", "Animation", "Adventure", "Comedy", "Drama", "Fantasy", "Fiction", "Horror", "Musical", "Romance", "Thriller", "War" });
+            migrationBuilder.InsertData("Genres", "Description", new object[] { "Ação", "Animação", "Aventura", "Comédia", "Drama", "Fantasia", "Ficção", "Guerra", "Musical", "Romance", "Suspense", "Terror" });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
