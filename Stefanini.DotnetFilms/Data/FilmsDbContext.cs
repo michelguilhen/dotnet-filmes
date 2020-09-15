@@ -1,16 +1,23 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Stefanini.DotnetFilms.Models;
 
 namespace Stefanini.DotnetFilms.Data
 {
     public class FilmsDbContext : DbContext
     {
+        public readonly IConfiguration _configuration;
+
+        public FilmsDbContext(IConfiguration configuration) 
+        {
+            _configuration = configuration;
+        }
         public DbSet<Film> Films { get; set; }
         public DbSet<Genre> Genres { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Password=12345;Persist Security Info=True;User ID=sa;Initial Catalog=FilmsDatabase;Data Source=DESKTOP-2R2U4M2");
+            optionsBuilder.UseSqlServer(_configuration.GetConnectionString("filmsDatabase"));
         }
     }
 }
