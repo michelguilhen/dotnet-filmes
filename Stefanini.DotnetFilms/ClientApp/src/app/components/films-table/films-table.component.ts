@@ -95,7 +95,8 @@ export class FilmsTableComponent implements OnInit {
   public deleteFilm(id: number) {
     this.filmService.deleteById(id).subscribe(res => {
       if (res.success) {
-        this.ngOnInit();
+        const index = this.films.findIndex(f => f.id == id);
+        this.films.splice(index, 1);
       }
       else {
         console.log(`Erro: ${res.message}`);

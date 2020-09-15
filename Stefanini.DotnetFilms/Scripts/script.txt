@@ -1,0 +1,126 @@
+﻿IF OBJECT_ID(N'[__EFMigrationsHistory]') IS NULL
+BEGIN
+    CREATE TABLE [__EFMigrationsHistory] (
+        [MigrationId] nvarchar(150) NOT NULL,
+        [ProductVersion] nvarchar(32) NOT NULL,
+        CONSTRAINT [PK___EFMigrationsHistory] PRIMARY KEY ([MigrationId])
+    );
+END;
+
+GO
+
+CREATE TABLE [Genres] (
+    [Id] bigint NOT NULL IDENTITY,
+    [Description] nvarchar(max) NULL,
+    CONSTRAINT [PK_Genres] PRIMARY KEY ([Id])
+);
+
+GO
+
+CREATE TABLE [Films] (
+    [Id] bigint NOT NULL IDENTITY,
+    [Title] nvarchar(max) NULL,
+    [Director] nvarchar(max) NULL,
+    [Synopsis] nvarchar(max) NULL,
+    [Release] int NOT NULL,
+    [GenreId] bigint NULL,
+    CONSTRAINT [PK_Films] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_Films_Genres_GenreId] FOREIGN KEY ([GenreId]) REFERENCES [Genres] ([Id]) ON DELETE NO ACTION
+);
+
+GO
+
+CREATE INDEX [IX_Films_GenreId] ON [Films] ([GenreId]);
+
+GO
+
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20200912002956_Initial', N'3.1.8');
+
+GO
+
+IF EXISTS (SELECT * FROM [sys].[identity_columns] WHERE [name] IN (N'Description') AND [object_id] = OBJECT_ID(N'[Genres]'))
+    SET IDENTITY_INSERT [Genres] ON;
+INSERT INTO [Genres] ([Description])
+VALUES (N'Action'),
+(N'Animation'),
+(N'Adventure'),
+(N'Comedy'),
+(N'Drama'),
+(N'Fantasy'),
+(N'Fiction'),
+(N'Horror'),
+(N'Musical'),
+(N'Romance'),
+(N'Thriller'),
+(N'War');
+IF EXISTS (SELECT * FROM [sys].[identity_columns] WHERE [name] IN (N'Description') AND [object_id] = OBJECT_ID(N'[Genres]'))
+    SET IDENTITY_INSERT [Genres] OFF;
+
+GO
+
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20200912003010_InsertGenres', N'3.1.8');
+
+GO
+
+DECLARE @var0 sysname;
+SELECT @var0 = [d].[name]
+FROM [sys].[default_constraints] [d]
+INNER JOIN [sys].[columns] [c] ON [d].[parent_column_id] = [c].[column_id] AND [d].[parent_object_id] = [c].[object_id]
+WHERE ([d].[parent_object_id] = OBJECT_ID(N'[Films]') AND [c].[name] = N'Release');
+IF @var0 IS NOT NULL EXEC(N'ALTER TABLE [Films] DROP CONSTRAINT [' + @var0 + '];');
+ALTER TABLE [Films] ALTER COLUMN [Release] int NULL;
+
+GO
+
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20200914002944_AlterTableReleaseNullable', N'3.1.8');
+
+GO
+
+ALTER TABLE [Films] DROP CONSTRAINT [FK_Films_Genres_GenreId];
+
+GO
+
+DECLARE @var1 sysname;
+SELECT @var1 = [d].[name]
+FROM [sys].[default_constraints] [d]
+INNER JOIN [sys].[columns] [c] ON [d].[parent_column_id] = [c].[column_id] AND [d].[parent_object_id] = [c].[object_id]
+WHERE ([d].[parent_object_id] = OBJECT_ID(N'[Films]') AND [c].[name] = N'Title');
+IF @var1 IS NOT NULL EXEC(N'ALTER TABLE [Films] DROP CONSTRAINT [' + @var1 + '];');
+ALTER TABLE [Films] ALTER COLUMN [Title] nvarchar(max) NOT NULL;
+
+GO
+
+DROP INDEX [IX_Films_GenreId] ON [Films];
+DECLARE @var2 sysname;
+SELECT @var2 = [d].[name]
+FROM [sys].[default_constraints] [d]
+INNER JOIN [sys].[columns] [c] ON [d].[parent_column_id] = [c].[column_id] AND [d].[parent_object_id] = [c].[object_id]
+WHERE ([d].[parent_object_id] = OBJECT_ID(N'[Films]') AND [c].[name] = N'GenreId');
+IF @var2 IS NOT NULL EXEC(N'ALTER TABLE [Films] DROP CONSTRAINT [' + @var2 + '];');
+ALTER TABLE [Films] ALTER COLUMN [GenreId] bigint NOT NULL;
+CREATE INDEX [IX_Films_GenreId] ON [Films] ([GenreId]);
+
+GO
+
+DECLARE @var3 sysname;
+SELECT @var3 = [d].[name]
+FROM [sys].[default_constraints] [d]
+INNER JOIN [sys].[columns] [c] ON [d].[parent_column_id] = [c].[column_id] AND [d].[parent_object_id] = [c].[object_id]
+WHERE ([d].[parent_object_id] = OBJECT_ID(N'[Films]') AND [c].[name] = N'Director');
+IF @var3 IS NOT NULL EXEC(N'ALTER TABLE [Films] DROP CONSTRAINT [' + @var3 + '];');
+ALTER TABLE [Films] ALTER COLUMN [Director] nvarchar(max) NOT NULL;
+
+GO
+
+ALTER TABLE [Films] ADD CONSTRAINT [FK_Films_Genres_GenreId] FOREIGN KEY ([GenreId]) REFERENCES [Genres] ([Id]) ON DELETE CASCADE;
+
+GO
+
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20200914003339_AlterTableFilmRequiredFields', N'3.1.8');
+
+GO
+
